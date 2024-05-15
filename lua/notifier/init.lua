@@ -63,7 +63,7 @@ M.all = function() return notifications end
 M.latest = function() return notifications[#notifications] end
 
 -- Clear all notifications
-M.clear_all = function() notifications = {} end
+M.clear = function() notifications = {} end
 
 -- Convert log level to string
 --
