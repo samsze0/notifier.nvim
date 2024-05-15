@@ -106,8 +106,8 @@ vim.notify = function(msg, level) ---@diagnostic disable-line: duplicate-set-fie
 
     popup:update_layout({
       size = {
-        width = math.min(vim.o.columns * 0.3, cols),
-        height = math.min(vim.o.lines * 0.8, #lines),
+        width = math.min(math.floor(vim.o.columns * 0.3), cols),
+        height = math.min(math.floor(vim.o.lines * 0.8), #lines),
       },
     })
     popup:show()
