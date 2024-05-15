@@ -30,9 +30,6 @@ print(vim.inspect(notifier.all())) -- Print all notifications
 vim.info(notifier.all())
 ```
 
-```lua
-```
-
 ## License
 
 MIT
