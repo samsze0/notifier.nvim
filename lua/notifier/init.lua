@@ -1,4 +1,7 @@
-local utils = require("utils")
+local lang_utils = require("utils.lang")
+local tbl_utils = require("utils.table")
+local opts_utils = require("utils.opts")
+local str_utils = require("utils.string")
 local NuiPopup = require("nui.popup")
 
 local popup_options = {
@@ -70,7 +73,7 @@ M.clear = function() notifications = {} end
 ---@param level number
 ---@return string
 local function log_level_to_str(level)
-  return utils.switch(level, {
+  return lang_utils.match(level, {
     [vim.log.levels.ERROR] = "Error",
     [vim.log.levels.WARN] = "Warn",
     [vim.log.levels.INFO] = "Info",
@@ -101,7 +104,7 @@ vim.notify = function(msg, level) ---@diagnostic disable-line: duplicate-set-fie
 
   vim.schedule(function()
     local lines = vim.split(msg, "\n")
-    local cols = utils.max(lines, function(_, line) return string.len(line) end)
+    local cols = tbl_utils.max(lines, function(_, line) return string.len(line) end)
     vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, lines)
 
     popup:update_layout({
@@ -136,7 +139,7 @@ end
 ---@alias NotifierOptions { popup_options?: nui_popup_options, duration?: { default: number, [number]: number } }
 ---@param opts? NotifierOptions
 function M.setup(opts)
-  config = utils.opts_deep_extend(config, opts)
+  config = opts_utils.deep_extend(config, opts)
   ---@cast config NotifierOptions
 
   popup = NuiPopup(config.popup_options)
@@ -145,11 +148,11 @@ function M.setup(opts)
 
   timer = vim.loop.new_timer()
 
-  vim.error = function(...) vim.notify(utils.str_fmt(...), vim.log.levels.ERROR) end
-  vim.warn = function(...) vim.notify(utils.str_fmt(...), vim.log.levels.WARN) end
-  vim.info = function(...) vim.notify(utils.str_fmt(...), vim.log.levels.INFO) end
-  vim.debug = function(...) vim.notify(utils.str_fmt(...), vim.log.levels.DEBUG) end
-  vim.trace = function(...) vim.notify(utils.str_fmt(...), vim.log.levels.TRACE) end
+  vim.error = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.ERROR) end
+  vim.warn = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.WARN) end
+  vim.info = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.INFO) end
+  vim.debug = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.DEBUG) end
+  vim.trace = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.TRACE) end
 end
 
 return M
