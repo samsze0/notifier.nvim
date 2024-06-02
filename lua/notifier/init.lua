@@ -63,7 +63,7 @@ M.subscribe = function(callback) table.insert(subscribers, callback) end
 M.all = function() return notifications end
 
 ---@return Notification?
-M.latest = function() return notifications[#notifications] end
+M.latest = function() return notifications[1] end
 
 -- Clear all notifications
 M.clear = function() notifications = {} end
@@ -104,7 +104,9 @@ vim.notify = function(msg, level) ---@diagnostic disable-line: duplicate-set-fie
 
   vim.schedule(function()
     local lines = vim.split(msg, "\n")
-    local cols = tbl_utils.max(lines, function(_, line) return string.len(line) end)
+    local cols = tbl_utils.max(lines, {
+      fn = function(_, line) return string.len(line) end
+    })
     vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, lines)
 
     popup:update_layout({
