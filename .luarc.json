@@ -6,7 +6,9 @@
       "lua",
       "$VIMRUNTIME/lua",
       "${3rd}/luv/library",
-      ".tests/mini.test/lua"
+      ".test/lua",
+      ".test/external-dep/utils.nvim/lua",
+      ".test/external-dep/nui.nvim/lua"
     ],
     "checkThirdParty": false
   }
