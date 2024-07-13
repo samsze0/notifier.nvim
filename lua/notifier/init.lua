@@ -92,7 +92,12 @@ vim.notify = function(msg, level) ---@diagnostic disable-line: duplicate-set-fie
 
   level = level or vim.log.levels.OFF
 
-  if type(msg) ~= "string" then msg = vim.inspect(msg) end
+  local t = type(msg)
+  if t == "nil" then
+    msg = "nil"
+  elseif t ~= "string" then
+    msg = vim.inspect(msg)
+  end
 
   local t = os.time()
   local n = {
@@ -105,7 +110,7 @@ vim.notify = function(msg, level) ---@diagnostic disable-line: duplicate-set-fie
   vim.schedule(function()
     local lines = vim.split(msg, "\n")
     local cols = tbl_utils.max(lines, {
-      fn = function(_, line) return string.len(line) end
+      fn = function(_, line) return string.len(line) end,
     })
     vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, lines)
 
