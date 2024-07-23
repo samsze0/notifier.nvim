@@ -82,7 +82,7 @@ local function log_level_to_str(level)
   }, "Unknown")
 end
 
----@type uv_timer_t
+---@type uv.uv_timer_t
 local timer = nil
 
 vim.notify = function(msg, level) ---@diagnostic disable-line: duplicate-set-field
@@ -153,7 +153,9 @@ function M.setup(opts)
   popup:mount()
   popup:hide()
 
-  timer = vim.loop.new_timer()
+  local _timer, err = vim.uv.new_timer()
+  assert(_timer, err)
+  timer = _timer
 
   vim.error = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.ERROR) end
   vim.warn = function(...) vim.notify(str_utils.fmt(...), vim.log.levels.WARN) end
