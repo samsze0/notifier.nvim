@@ -5,8 +5,9 @@ local str_utils = require("utils.string")
 local utils = require("notifier.utils")
 local NotificationPopupStack = require("notifier.popup-stack")
 local config = require("notifier.config")
+local fidget = require("fidget")
 
-local popup_stack = NotificationPopupStack.new()
+-- local popup_stack = NotificationPopupStack.new()
 
 local M = {}
 
@@ -61,11 +62,13 @@ function M.setup(opts)
     }
     table.insert(notifications, 1, n)
 
-    popup_stack:push(n)
+    -- popup_stack:push(n)
 
     for _, sub in ipairs(subscribers) do
       vim.schedule(function() sub(n) end)
     end
+
+    fidget.notify(msg, level)
   end
 end
 

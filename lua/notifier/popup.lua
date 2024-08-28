@@ -59,6 +59,8 @@ function NotificationPopup.new(opts)
   setmetatable(obj, NotificationPopup)
   ---@cast obj NotificationPopup
 
+  obj.nui_popup:show()
+
   return obj
 end
 

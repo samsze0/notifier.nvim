@@ -6,6 +6,9 @@
     },
     {
       "uri": "https://github.com/MunifTanjim/nui.nvim"
+    },
+    {
+      "uri": "https://github.com/j-hui/fidget.nvim"
     }
   ]
 }
